@@ -5,6 +5,8 @@ use Model\Comment;
 
 interface CommentRepository {
     function insert(Comment $comment): Comment;
+
+    function findById(int $id): ?Comment;
 }
 
 class CommentRepositoryImpl implements CommentRepository
@@ -24,5 +26,22 @@ class CommentRepositoryImpl implements CommentRepository
         $comment->setId($id);
 
         return $comment;
+    }
+
+    public function findById(int $id): ?Comment
+    {
+        $sql = "SELECT * FROM comments WHERE id = ?";
+        $statement = $this->connection->prepare($sql);
+        $statement->execute([$id]);
+
+        if ($row = $statement->fetch()){
+            return new Comment(
+              id: $row['id'],
+              email: $row['email'],
+              comment: $row['comment']
+            );
+        }else{
+            return null;
+        }
     }
 }

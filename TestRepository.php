@@ -8,10 +8,12 @@ use Repository\CommentRepositoryImpl;
 
 $connection = getConnection();
 
-$comment    = new Comment(email: 'repository@test.com',comment: 'Hai');
+//$comment    = new Comment(email: 'repository@test.com',comment: 'Hai');
 $repository = new CommentRepositoryImpl($connection);
 
-$commentObj = $repository->insert($comment);
-var_dump($commentObj->getId());
+//$commentObj = $repository->insert($comment);
+$commentObj = $repository->findById(1);
+
+var_dump($commentObj);
 
 $connection = null;
