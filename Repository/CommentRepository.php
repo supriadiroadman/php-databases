@@ -7,6 +7,8 @@ interface CommentRepository {
     function insert(Comment $comment): Comment;
 
     function findById(int $id): ?Comment;
+
+    function findAll(): array;
 }
 
 class CommentRepositoryImpl implements CommentRepository
@@ -43,5 +45,22 @@ class CommentRepositoryImpl implements CommentRepository
         }else{
             return null;
         }
+    }
+
+    public function findAll(): array
+    {
+        $sql = "SELECT * FROM comments";
+        $statement = $this->connection->query($sql);
+
+        $array = [];
+        while ($row = $statement->fetch()) {
+            $array[] =  new Comment(
+                id: $row['id'],
+                email: $row['email'],
+                comment: $row['comment']
+            );
+        }
+
+        return $array;
     }
 }

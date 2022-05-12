@@ -12,7 +12,8 @@ $connection = getConnection();
 $repository = new CommentRepositoryImpl($connection);
 
 //$commentObj = $repository->insert($comment);
-$commentObj = $repository->findById(1);
+//$commentObj = $repository->findById(1);
+$commentObj = $repository->findAll();
 
 var_dump($commentObj);
 
